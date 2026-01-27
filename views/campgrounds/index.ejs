@@ -2,7 +2,9 @@
     <div id="cluster-map"></div>
     <H1>All Campgrounds!</H1>
     <div>
-        <a href="/campgrounds/new">Add Campground</a>
+        <form action="/campgrounds/new">
+            <input type="submit" value="Add Campground" />
+        </form>
     </div>
 
     <% for (let campground of campgrounds) { %>
@@ -19,27 +21,29 @@
                         <p class="card-text" class="<%= campground.description %>"></p>
                         <p class="card-text" class="<%= campground.description %>"></p>
                         <p class="card-text">
-                            <small class="text-muted"><%= campground.location %></small>
+                            <small class="text-muted">
+                                <%= campground.location %>
+                            </small>
                         </p>
-                        <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">View <%= campground.title %></a>
+                        <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">View <%= campground.title
+                                %></a>
                     </div>
                 </div>
             </div>
         </div>
         <% } %>
 
-        <%- "<script>" %>
-        const maptilerApiKey = "<%- process.env.MAPTILER_API_KEY %>";
-        const campgrounds = {
-        type: "FeatureCollection",
-        features: <%- JSON.stringify(
-            campgrounds.map(campground => ({
-            type: "Feature",
-            geometry: campground.geometry,
-            properties: { popUpMarkup: campground?.properties?.popUpMarkup }
-            }))
-        ) %>
-        };
-        <%- "</script>" %>
+            <%- "<script>" %>
+                const maptilerApiKey = "<%- process.env.MAPTILER_API_KEY %>";
+                    const campgrounds = {
+                    type: "FeatureCollection",
+                    features: <%- JSON.stringify( campgrounds.map(campground=> ({
+                        type: "Feature",
+                        geometry: campground.geometry,
+                        properties: { popUpMarkup: campground?.properties?.popUpMarkup }
+                        }))
+                        ) %>
+                        };
+                        <%- "</script>" %>
 
-<script src="/javascripts/clusterMap.js"></script>
+                            <script src="/javascripts/clusterMap.js"></script>
